@@ -14,7 +14,7 @@ def get_geocoder(app_name: str,  custom_domain: Optional[str] = None):
 
 app_name = os.environ.get('APP_NAME', None)
 if app_name is None:
-        raise Exception('APP_NAME should be set')
+    raise Exception('APP_NAME should be set')
 
 custom_domain = os.environ.get('CUSTOM_DOMAIN', None)
 
