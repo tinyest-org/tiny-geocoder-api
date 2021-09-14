@@ -6,7 +6,7 @@ from .resources import geocoder
 app = FastAPI()
 
 
-@app.get('/geocode', response_class=GeocodeResponse)
+@app.get('/geocode', response_model=GeocodeResponse)
 def geocode_path(q: str):
     res = geocoder(q)
     return GeocodeResponse(
