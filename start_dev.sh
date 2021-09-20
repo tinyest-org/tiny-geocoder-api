@@ -1,0 +1,1 @@
+APP_NAME="test_dev_petit-geocoder" uvicorn app.main:app --port 8000 --reload
