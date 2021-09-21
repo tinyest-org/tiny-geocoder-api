@@ -7,7 +7,10 @@ from starlette.responses import JSONResponse
 from .geocoder.dto import GeocodeResponse
 from .resources import geocoder
 
-app = FastAPI()
+app = FastAPI(
+    name="Petit Geocoder",
+    description="Helps you build a easy to use geocoder service, using multiple geocoder"
+)
 
 origins = os.environ.get('origins', '').split(',')
 
