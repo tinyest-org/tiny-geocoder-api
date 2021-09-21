@@ -1,13 +1,14 @@
 import os
-from typing import Optional
+from typing import List, Optional
 
-from .base_coder import BaseGeocoder
-from .dto import GeocodeResponse
-from .google_custom_geocoder import GoogleGeocoder
+from .geocoder.base_coder import BaseGeocoder
+from .geocoder.dto import GeocodeResponse
+from .geocoder.google_custom_geocoder import GoogleGeocoder
+from .geocoder.interface import IGeocoder
 
 
 class MultiGeocoder:
-    def __init__(self, coders) -> None:
+    def __init__(self, coders: List[IGeocoder]) -> None:
         self.coders = coders
 
     def geocode(self, q: str) -> Optional[GeocodeResponse]:

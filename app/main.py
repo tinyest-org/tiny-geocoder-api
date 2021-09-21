@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 
-from .dto import GeocodeResponse
+from .geocoder.dto import GeocodeResponse
 from .resources import geocoder
 
 app = FastAPI()
