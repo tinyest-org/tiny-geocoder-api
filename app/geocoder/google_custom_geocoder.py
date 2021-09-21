@@ -7,7 +7,7 @@ import requests
 from .dto import GeocodeResponse
 
 
-def flatten(l: Iterable[Any]) -> List[Any]:
+def flatten(l: Iterable) -> List[Any]:
     for el in l:
         if isinstance(el, Iterable) and not isinstance(el, (str, bytes)):
             yield from flatten(el)
