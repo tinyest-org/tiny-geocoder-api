@@ -76,9 +76,10 @@ class GoogleGeocoder(IGeocoder):
             r = requests.get(url=url, params=query)
             retries += 1
             # handling 429
-            self.logger.warn(f'[status: {r.status_code}]unable to find result for {q}')
+            self.logger.warn(
+                f'[status: {r.status_code}]unable to find result for {q}')
             time.sleep(1)
-        
+
         if r.status_code:
             s = remove_begining(r.text)
             res = flatten(json.loads(s))
