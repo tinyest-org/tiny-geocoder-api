@@ -1,10 +1,13 @@
+import logging
 import json
+import time
 from collections.abc import Iterable
 from typing import Any, List, Optional
-from .interface import IGeocoder
+
 import requests
 
 from .dto import GeocodeResponse
+from .interface import IGeocoder
 
 
 def flatten(l: Iterable) -> List[Any]:
@@ -49,6 +52,9 @@ def find_likely_following_coords(entry: List[Any]) -> Optional[GeocodeResponse]:
         return None
 
 
+MAX_RETRIES = 5
+
+
 class GoogleGeocoder(IGeocoder):
     """
     This class imitates a google map search and is not based on the API
@@ -57,18 +63,23 @@ class GoogleGeocoder(IGeocoder):
     """
 
     def __init__(self) -> None:
-        pass
+        self.logger = logging.getLogger()
 
     def geocode(self, q: str):
         query = {
             "q": q,
             "tbm": "map",
         }
-
+        retries = 0
         r = requests.get(url=url, params=query)
-
-        if r.status_code == 200:
-            print(r.status_code)
+        while r.status_code != 200 and retries < MAX_RETRIES:
+            r = requests.get(url=url, params=query)
+            retries += 1
+            # handling 429
+            self.logger.warn(f'[status: {r.status_code}]unable to find result for {q}')
+            time.sleep(1)
+        
+        if r.status_code:
             s = remove_begining(r.text)
             res = flatten(json.loads(s))
             return find_likely_following_coords(res)
