@@ -23,11 +23,18 @@ def remove_begining(res: str):
     return res[4:]
 
 
+def is_likely_long_lat(item: Any):
+    if isinstance(item, float):
+        if -90 < item < 90:
+            return True
+    return False
+
+
 def find_likely_following_coords(entry: List[Any]) -> Optional[GeocodeResponse]:
     lat = None
     long = None
     for item in entry:
-        if isinstance(item, float):
+        if is_likely_long_lat(item):
             if lat is None:
                 lat = item
             else:
@@ -41,12 +48,14 @@ def find_likely_following_coords(entry: List[Any]) -> Optional[GeocodeResponse]:
     else:
         return None
 
+
 class GoogleGeocoder(IGeocoder):
     """
     This class imitates a google map search and is not based on the API
-    
+
     It is likely to break in the future, use it with caution
     """
+
     def __init__(self) -> None:
         pass
 
