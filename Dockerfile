@@ -1,9 +1,13 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
+FROM python:3.8.6-slim
 
-WORKDIR /app
+WORKDIR /api
 
-COPY ./requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-COPY ./ /app
+COPY . .
+
+EXPOSE 5000
+
+ENTRYPOINT ["uvicorn", "app.server:app", "--port", "5000"]
